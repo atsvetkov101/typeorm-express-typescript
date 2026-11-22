@@ -1,5 +1,47 @@
 # Промты
 
+## 2026-11-22 15:39 UTC
+
+```
+✖ tsc-files --noEmit:
+error TS5042: Option 'project' cannot be mixed with source files on a command line.
+```
+
+## 2026-11-22 14:40 UTC
+
+поправь конфиги, документацию и тесты
+
+## 2026-11-22 14:37 UTC
+
+как поправить docs/ai/DEFINITION_OF_DONE.md
+или где-то еще, чтобы правило "не использовать any" применялось всегда ?
+
+## 2026-11-22 14:34 UTC
+
+подсвечивается ошибка:
+Variable 'adminUserToken' implicitly has type 'any' in some locations where its type cannot be determined.ts(7034)
+для файла
+C:\gh\typeorm-express-typescript\src\controllers\users\userInfo.test.ts
+какова ее критичность ?
+
+## 2026-11-22 14:18 UTC
+
+выполни задачу TASK1.md
+
+## 2026-11-22 14:18 UTC
+
+перейди в новую ветку task1 то текущей
+
+## 2026-11-22 14:16 UTC
+
+запиши в TASK1.md
+
+## 2026-11-22 14:14 UTC
+
+работаем над задачей TASK1.md
+составь план. покажи мне для проверки.
+после проверки план будет сохранен в TASK1.md в разделы "Что нужно сделать" и "Затрагиваемые области"
+
 ## 2026-11-22 13:42 UTC
 
 выполни пункты 1-3

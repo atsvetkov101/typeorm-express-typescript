@@ -10,11 +10,11 @@ import { User } from 'orm/entities/users/User';
 import { app } from '../../';
 
 describe('Users', () => {
-  let dbConnection: Connection;
+  let dbConnection: Connection | null;
   let userRepository: Repository<User>;
 
   const userPassword = 'pass1';
-  let adminUserToken = null;
+  let adminUserToken: string;
   const adminUser = new User();
   adminUser.username = 'Badger';
   adminUser.name = 'Brandon Mayhew';
@@ -23,7 +23,7 @@ describe('Users', () => {
   adminUser.hashPassword();
   adminUser.role = 'ADMINISTRATOR' as Role;
 
-  let standardUserToken = null;
+  let standardUserToken: string;
   const standardUser = new User();
   standardUser.username = 'Toddy';
   standardUser.name = 'Todd Alquist';
@@ -74,7 +74,7 @@ describe('Users', () => {
   describe('GET /v1/auth/users//:id([0-9]+)', () => {
     it('should get user', async () => {
       const user = await userRepository.findOne({ email: adminUser.email });
-      const res = await request(app).get(`/v1/users/${user.id}`).set('Authorization', adminUserToken);
+      const res = await request(app).get(`/v1/users/${user!.id}`).set('Authorization', adminUserToken);
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal('User found');
       expect(res.body.data.email).to.eql(adminUser.email);

@@ -77,7 +77,7 @@
 - Общие типы выносятся в `src/types/`; расширения Express — в `src/types/express/index.d.ts`.
 - Новые env-переменные добавляются в `.env`/`config/*.env` и в `ProcessEnv.d.ts`.
 - Явный тип возврата обязателен для утилит; для обработчиков Express — не требуется.
-- `any` разрешён ESLint, но предпочтительны конкретные типы.
+- `any` запрещён: ESLint (`@typescript-eslint/no-explicit-any`) и `noImplicitAny` в `tsconfig.json`. Неизвестные значения описываются через `unknown` + type guards, коллекции — через дженерики; приведение `as` — только при реальной необходимости.
 
 ## Тесты
 

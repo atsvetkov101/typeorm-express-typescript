@@ -68,13 +68,14 @@
 
 ## 6. Инструменты качества и процесс
 
-| Нельзя менять                                                                                                      | Почему                                                                  |
-| ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| `.eslintrc.js`, `.prettierrc`, `tsconfig.json`, `.lintstagedrc`, `.commitlintrc.ts`, Husky-хуки — нельзя ослаблять | На них завязаны `lint-staged`, проверки перед коммитом и единый стиль   |
-| `npm run lint` = `eslint --max-warnings 0` + `tsc --noEmit`                                                        | Ноль предупреждений — обязательное условие; ослабление пропустит ошибки |
-| `noImplicitReturns`, `noFallthroughCasesInSwitch`, `experimentalDecorators`, `emitDecoratorMetadata`, `typeRoots`  | Нужны для строгости и работы декораторов TypeORM/ambient-типов          |
-| Запрет `Array.reduce` (`eslint-plugin-no-array-reduce`) и правило `import/order`                                   | Зафиксировано в ESLint и STYLEGUIDE                                     |
-| Conventional Commits                                                                                               | Commitlint и Husky блокируют коммиты другого формата                    |
+| Нельзя менять                                                                                                      | Почему                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `.eslintrc.js`, `.prettierrc`, `tsconfig.json`, `.lintstagedrc`, `.commitlintrc.ts`, Husky-хуки — нельзя ослаблять | На них завязаны `lint-staged`, проверки перед коммитом и единый стиль                                                |
+| `npm run lint` = `eslint --max-warnings 0` + `tsc --noEmit`                                                        | Ноль предупреждений — обязательное условие; ослабление пропустит ошибки                                              |
+| `noImplicitReturns`, `noFallthroughCasesInSwitch`, `experimentalDecorators`, `emitDecoratorMetadata`, `typeRoots`  | Нужны для строгости и работы декораторов TypeORM/ambient-типов                                                       |
+| `@typescript-eslint/no-explicit-any: error` и `noImplicitAny: true`                                                | Запрещают явный и неявный `any`; ослабление скрывает ошибки типов и пропускает небезопасный код через `npm run lint` |
+| Запрет `Array.reduce` (`eslint-plugin-no-array-reduce`) и правило `import/order`                                   | Зафиксировано в ESLint и STYLEGUIDE                                                                                  |
+| Conventional Commits                                                                                               | Commitlint и Husky блокируют коммиты другого формата                                                                 |
 
 ## 7. Скрипты `package.json`
 
