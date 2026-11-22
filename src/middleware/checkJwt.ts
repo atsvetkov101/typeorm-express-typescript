@@ -13,11 +13,12 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const token = authHeader.split(' ')[1];
-  let jwtPayload: { [key: string]: any };
+  let jwtPayload: JwtPayload & { iat?: number; exp?: number };
   try {
-    jwtPayload = jwt.verify(token, process.env.JWT_SECRET as string) as { [key: string]: any };
-    ['iat', 'exp'].forEach((keyToRemove) => delete jwtPayload[keyToRemove]);
-    req.jwtPayload = jwtPayload as JwtPayload;
+    jwtPayload = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload & { iat?: number; exp?: number };
+    delete jwtPayload.iat;
+    delete jwtPayload.exp;
+    req.jwtPayload = jwtPayload;
   } catch (err) {
     const customError = new CustomError(401, 'Raw', 'JWT error', null, err);
     return next(customError);

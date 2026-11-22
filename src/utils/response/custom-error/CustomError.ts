@@ -4,7 +4,7 @@ export class CustomError extends Error {
   private httpStatusCode: number;
   private errorType: ErrorType;
   private errors: string[] | null;
-  private errorRaw: any;
+  private errorRaw: unknown;
   private errorsValidation: ErrorValidation[] | null;
 
   constructor(
@@ -12,7 +12,7 @@ export class CustomError extends Error {
     errorType: ErrorType,
     message: string,
     errors: string[] | null = null,
-    errorRaw: any = null,
+    errorRaw: unknown = null,
     errorsValidation: ErrorValidation[] | null = null,
   ) {
     super(message);
