@@ -41,6 +41,12 @@ Windows (cmd.exe):
 curl --location "http://localhost:4000/v1/auth/login?email=admin%40admin.com&password=pass1" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept-Language: en" --data-urlencode "email=admin@admin.com" --data-urlencode "password=pass1"
 ```
 
+Проверочный вызов `GET /v1/user-info` (подставьте токен из ответа `/login`):
+
+```bat
+curl --location "http://localhost:4000/v1/user-info" --header "Authorization: Bearer <token>" --header "Accept-Language: en"
+```
+
 Поднимает PostgreSQL (порт 5432) и API на `http://localhost:4000`. В контейнере автоматически выполняются миграции и сиды (см. `scripts/be-node-dev.sh`).
 
 ## Команды
@@ -69,7 +75,7 @@ npm run seed:run:dev                    # сиды
 ## Структура
 
 - `src/index.ts` — точка входа, Express-приложение
-- `src/routes/` — роуты (`/v1/auth`, `/v1/users`)
+- `src/routes/` — роуты (`/v1/auth`, `/v1/users`, `/v1/user-info`)
 - `src/controllers/` — контроллеры
 - `src/middleware/` — JWT, роли, валидация, обработка ошибок, язык
 - `src/orm/entities/`, `src/orm/migrations/`, `src/orm/seeds/` — TypeORM
@@ -85,6 +91,7 @@ npm run seed:run:dev                    # сиды
 - Ответы API — только через `customSuccess` / `CustomError` из `src/utils/response/`.
 - Валидация входных данных — middleware в `src/middleware/validation/`.
 - Новые env-переменные добавлять в `.env`/`config/*.env` и в `src/types/ProcessEnv.d.ts`.
+- `any` запрещён (ESLint `@typescript-eslint/no-explicit-any` + `noImplicitAny` в `tsconfig.json`): используйте `unknown` и точные типы.
 - Коммиты — в формате Conventional Commits; перед коммитом работают Husky + lint-staged.
 - Тесты размещать рядом с кодом как `*.test.ts`; они требуют запущенной БД.
 - Инварианты проекта (что нельзя менять и почему) — [docs/ai/GUARDRAILS.md](docs/ai/GUARDRAILS.md). Отступать от них можно только после согласования и с обновлением этого документа.

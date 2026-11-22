@@ -4,7 +4,7 @@ import { Role } from '../entities/users/types';
 import { User } from '../entities/users/User';
 
 export class SeedUsers1590519635401 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<any> {
+  public async up(queryRunner: QueryRunner): Promise<void> {
     let user = new User();
     const userRepository = getRepository(User);
 
@@ -90,7 +90,7 @@ export class SeedUsers1590519635401 implements MigrationInterface {
     await userRepository.save(user);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {
+  public async down(queryRunner: QueryRunner): Promise<void> {
     console.log('Not implemented');
   }
 }

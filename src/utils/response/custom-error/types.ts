@@ -2,7 +2,7 @@ export type ErrorResponse = {
   errorType: ErrorType;
   errorMessage: string;
   errors: string[] | null;
-  errorRaw: any;
+  errorRaw: unknown;
   errorsValidation: ErrorValidation[] | null;
   stack?: string;
 };
