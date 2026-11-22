@@ -17,7 +17,7 @@ export const userInfo = async (req: Request, res: Response, next: NextFunction) 
       const customError = new CustomError(404, 'General', 'User not found.', ['User not found.']);
       return next(customError);
     }
-    res.customSuccess(200, 'User info.', user);
+    res.customSuccess(200, 'User info.', { ...user, language: req.language });
   } catch (err) {
     const customError = new CustomError(400, 'Raw', 'Error', null, err);
     return next(customError);

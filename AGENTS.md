@@ -41,10 +41,28 @@ Windows (cmd.exe):
 curl --location "http://localhost:4000/v1/auth/login?email=admin%40admin.com&password=pass1" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept-Language: en" --data-urlencode "email=admin@admin.com" --data-urlencode "password=pass1"
 ```
 
-Проверочный вызов `GET /v1/user-info` (подставьте токен из ответа `/login`):
+Проверочный вызов `GET /v1/user-info` (подставьте токен из ответа `/login`). Поле `data.language` — язык текущего аутентифицированного пользователя, определяется по заголовку `Accept-Language` (`en`/`en-US` → `en-US`, `sl`/`sl-SI` → `sl-SI`, иначе `en-US`):
 
 ```bat
-curl --location "http://localhost:4000/v1/user-info" --header "Authorization: Bearer <token>" --header "Accept-Language: en"
+curl --location "http://localhost:4000/v1/user-info" --header "Authorization: Bearer <token>" --header "Accept-Language: sl-SI"
+```
+
+Пример ответа:
+
+```json
+{
+  "message": "User info.",
+  "data": {
+    "id": 1,
+    "email": "admin@admin.com",
+    "username": "Heisenberg",
+    "name": "Walter White",
+    "role": "ADMINISTRATOR",
+    "language": "sl-SI",
+    "created_at": "2026-11-21T12:17:03.708Z",
+    "updated_at": "2026-11-21T12:17:03.708Z"
+  }
+}
 ```
 
 Поднимает PostgreSQL (порт 5432) и API на `http://localhost:4000`. В контейнере автоматически выполняются миграции и сиды (см. `scripts/be-node-dev.sh`).
