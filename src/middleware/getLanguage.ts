@@ -2,12 +2,32 @@ import { Request, Response, NextFunction } from 'express';
 
 import { Language } from '../orm/entities/users/types';
 
-export const getLanguage = (req: Request, res: Response, next: NextFunction) => {
-  const acceptLanguageHeader = req.get('Accept-Language') as Language | null;
+const DEFAULT_LANGUAGE: Language = 'en-US';
+
+const isLanguage = (value: string): value is Language => value === 'en-US' || value === 'sl-SI';
+
+const normalizeLanguage = (acceptLanguageHeader: string | null): Language => {
   if (!acceptLanguageHeader) {
-    req.language = 'en-US';
-    return next();
+    return DEFAULT_LANGUAGE;
   }
-  req.language = acceptLanguageHeader;
+
+  const [primaryLanguage] = acceptLanguageHeader.split(',');
+  const language = primaryLanguage.trim();
+
+  if (isLanguage(language)) {
+    return language;
+  }
+
+  const [languageCode] = language.split('-');
+
+  if (languageCode.toLowerCase() === 'sl') {
+    return 'sl-SI';
+  }
+
+  return DEFAULT_LANGUAGE;
+};
+
+export const getLanguage = (req: Request, res: Response, next: NextFunction) => {
+  req.language = normalizeLanguage(req.get('Accept-Language'));
   return next();
 };

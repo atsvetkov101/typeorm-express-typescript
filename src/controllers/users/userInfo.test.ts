@@ -49,23 +49,37 @@ describe('User info', () => {
     await userRepository.delete([adminUser.id, standardUser.id]);
   });
 
-  it('should get info of the current administrator', async () => {
+  it('should get info of the current administrator with the default language', async () => {
     const res = await request(app).get('/v1/user-info').set('Authorization', adminUserToken);
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal('User info.');
     expect(res.body.data.email).to.eql(adminUser.email);
     expect(res.body.data.username).to.eql(adminUser.username);
     expect(res.body.data.role).to.eql('ADMINISTRATOR');
+    expect(res.body.data.language).to.eql('en-US');
     expect(res.body.data).to.not.have.property('password');
   });
 
-  it('should get info of the current standard user', async () => {
-    const res = await request(app).get('/v1/user-info').set('Authorization', standardUserToken);
+  it('should get info of the current standard user with the language from Accept-Language', async () => {
+    const res = await request(app)
+      .get('/v1/user-info')
+      .set('Authorization', standardUserToken)
+      .set('Accept-Language', 'sl-SI');
     expect(res.status).to.equal(200);
     expect(res.body.message).to.equal('User info.');
     expect(res.body.data.email).to.eql(standardUser.email);
     expect(res.body.data.role).to.eql('STANDARD');
+    expect(res.body.data.language).to.eql('sl-SI');
     expect(res.body.data).to.not.have.property('password');
+  });
+
+  it('should normalize the language from Accept-Language', async () => {
+    const res = await request(app)
+      .get('/v1/user-info')
+      .set('Authorization', adminUserToken)
+      .set('Accept-Language', 'en-US,en;q=0.9');
+    expect(res.status).to.equal(200);
+    expect(res.body.data.language).to.eql('en-US');
   });
 
   it('should report error when authorization header is not provided', async () => {
